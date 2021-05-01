@@ -30,7 +30,7 @@ d3.csv("assets/data/data.csv").then(function(healthData) {
     // Step 1: Parse Data/Cast as numbers
     // ======================================================================
     healthData.forEach(function(data) {
-        data.healthcare = +data.healthcare;
+        data.healthcareLow = +data.healthcareLow;
         data.poverty = +data.poverty;
         data.abbr = data.abbr;
         // console.log(data);
@@ -39,11 +39,11 @@ d3.csv("assets/data/data.csv").then(function(healthData) {
     // Step 2: Create scale functions
     // =================================================================
     var xLinearScale = d3.scaleLinear()
-      .domain([0, d3.max(healthData, d => d.healthcare)])
+      .domain([8, d3.max(healthData, d => d.healthcareLow)])
       .range([0, width]);
 
     var yLinearScale = d3.scaleLinear()
-      .domain([8, d3.max(healthData, d => d.poverty)])
+      .domain([2, d3.max(healthData, d => d.poverty)])
       .range([height, 0]);
 
     // Step 3: Create axis functions
@@ -67,9 +67,9 @@ d3.csv("assets/data/data.csv").then(function(healthData) {
       .enter()
       .append("circle")
       .classed("stateCircle", true)
-      .attr("cx", d => xLinearScale(d.healthcare))
-      .attr("cy", d => yLinearScale(d.poverty))
-      .attr("r", "23")
+      .attr("cx", d => xLinearScale(d.poverty))
+      .attr("cy", d => yLinearScale(d.healthcareLow))
+      .attr("r", "20")
       .attr("opacity", "10")
 
     var circlesText = chartGroup.selectAll(".stateText")
@@ -77,8 +77,8 @@ d3.csv("assets/data/data.csv").then(function(healthData) {
       .enter()
       .append("text")
       .classed("stateText", true)
-      .attr("x", d => xLinearScale(d.healthcare))
-      .attr("y", d => yLinearScale(d.poverty))
+      .attr("x", d => xLinearScale(d.poverty))
+      .attr("y", d => yLinearScale(d.healthcareLow))
       .attr("class", "Text")
       .attr("font-size", "13px")
       .attr("text-anchor", "middle")
@@ -90,7 +90,7 @@ d3.csv("assets/data/data.csv").then(function(healthData) {
       .attr("class", "tooltip")
       .offset([0, 50])
       .html(function(d) {
-        return (`${d.state}<br>Poverty: ${d.poverty}<br>Healthcare: ${d.healthcare}`)
+        return (`${d.state}<br>Poverty: ${d.poverty}<br>Healthcare: ${d.healthcareLow}`)
     });
 
     // Step 7: Create tooltip in the chart
