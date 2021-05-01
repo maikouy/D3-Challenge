@@ -1,6 +1,3 @@
-// @TODO: YOUR CODE HERE!
-
-console.log("app.js is loaded!")
 
 // Set up Chart
 var svgWidth = 960;
@@ -46,7 +43,7 @@ d3.csv("assets/data/data.csv").then(function(healthData) {
       .range([0, width]);
 
     var yLinearScale = d3.scaleLinear()
-      .domain([0, d3.max(healthData, d => d.poverty)])
+      .domain([8, d3.max(healthData, d => d.poverty)])
       .range([height, 0]);
 
     // Step 3: Create axis functions
@@ -73,7 +70,7 @@ d3.csv("assets/data/data.csv").then(function(healthData) {
       .attr("cx", d => xLinearScale(d.healthcare))
       .attr("cy", d => yLinearScale(d.poverty))
       .attr("r", "23")
-      .attr("opacity", ".5")
+      .attr("opacity", "10")
 
     var circlesText = chartGroup.selectAll(".stateText")
       .data(healthData)
@@ -93,7 +90,7 @@ d3.csv("assets/data/data.csv").then(function(healthData) {
       .attr("class", "tooltip")
       .offset([0, 50])
       .html(function(d) {
-        return (`${d.state}<br>Healthcare: ${d.healthcare}<br>Poverty: ${d.poverty}`)
+        return (`${d.state}<br>Poverty: ${d.poverty}<br>Healthcare: ${d.healthcare}`)
     });
 
     // Step 7: Create tooltip in the chart
